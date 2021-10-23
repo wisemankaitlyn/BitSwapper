@@ -38,6 +38,8 @@ architecture RTL of BitSwapper is
   -- Signal Declarations
   begin
   -- SwapProc
+  -- i promise i haven't forgotten everything i've ever learned about
+  -- clock domain crossings.  i'm just trying to keep it simple.
   SwapProc : process (StClock, StAsyncReset, StSyncReset) is
   begin
     if (StAsyncReset = '1') then
@@ -53,7 +55,7 @@ architecture RTL of BitSwapper is
         StSourceEndOfPacket   <= '0';
         StSourceStartOfPacket <= '0';
     elsif (rising_edge(StClock)) then
-      StSinkReady     <= StSourceReady;
+      StSinkReady <= StSourceReady;
       for i in 0 to c_StSinkDataMsb loop
         StSourceData(i) <= StSinkData(StSinkData'high - i);
       end loop;
